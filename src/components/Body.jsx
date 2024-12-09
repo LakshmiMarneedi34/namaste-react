@@ -1,20 +1,25 @@
 import RestaurantCard from "./Restaurant";
-import { resList } from "./utils/mockData";
 import {useEffect, useState} from "react"
 import Shimmer from "./Shimmer";
 const Body = () => {
     const [listOfRest,setListOfRest]=useState([]);
-
+    const [seacrhValue,setSearchValue] = useState([])
+    const [originalList,setOriginalList]=useState([])
+    const [loader,setLoader] = useState(true)
     useEffect(()=>{
         fetchData()
     },[])
     const fetchData = async() => {
-        const data = await fetch('https://www.swiggy.com/dapi/restaurants/list/v5?lat=17.440513&lng=78.36466759999999&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING')
-
+        // const data = await fetch('https://corsproxy.io/?https://www.swiggy.com/dapi/restaurants/list/v5?lat=17.440513&lng=78.36466759999999&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING')
+        // const data = await fetch('https://cors-anywhere.herokuapp.com/https://www.swiggy.com/dapi/restaurants/list/v5?lat=17.440513&lng=78.36466759999999&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING')
+        const data = await fetch('https://thingproxy.freeboard.io/fetch/https://www.swiggy.com/dapi/restaurants/list/v5?lat=17.440513&lng=78.36466759999999&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING');
+        
         const convertedData = await data?.json()
+        setLoader(false)
         console.log("convertedData",convertedData)
         // console.log("eee",convertedData?.data?.cards?.[4])
         // console.log("deee",convertedData?.data?.cards?.[4]?.card?.card?.gridElements?.infoWithStyle?.restaurants)
+        if(convertedData?.data?.cards && convertedData?.data?.cards?.length>0){
         let modifiedData = convertedData?.data?.cards?.[4]?.card?.card?.gridElements?.infoWithStyle?.restaurants?.map((resta)=>{
             return {
                 name:resta?.info?.name,
@@ -22,15 +27,44 @@ const Body = () => {
                 imagedID:resta?.info?.cloudinaryImageId,
                 avgRating:resta?.info?.avgRating,
                 costForTwo:resta?.info?.costForTwo,
-                deliveryTime:resta?.info?.sla?.deliveryTime
+                deliveryTime:resta?.info?.sla?.deliveryTime,
+                id:resta?.info?.id
             }
         })
         setListOfRest(modifiedData)
+        setOriginalList(modifiedData)
+    }else{
+        setLoader(false)
     }
-    return !listOfRest?.length ? <Shimmer /> : (
+    }
+    const handleOnChange = (e) => {
+        let currentValue = e.target.value;
+        console.log("currentValue",currentValue)
+        let modifiedVal = currentValue.toLowerCase().trim()
+        setSearchValue(modifiedVal)
+        if(!modifiedVal){
+            setListOfRest(originalList)
+            return;
+        }
+        const filteredlist = listOfRest?.filter((each)=> {
+            return(
+                each?.name?.toLowerCase()?.includes(modifiedVal) ||
+                each?.cuisines?.toLowerCase()?.includes(modifiedVal) || 
+                String(each?.avgRating)?.toLowerCase()?.includes(modifiedVal) || 
+                each?.costForTwo?.toLowerCase()?.includes(modifiedVal) || 
+                String(each?.deliveryTime)?.toLowerCase()?.includes(modifiedVal)
+            )
+        })
+        console.log("##filteres",filteredlist)
+        setListOfRest(filteredlist)
+    }
+    return loader ? <Shimmer /> : (
     <div className="body">
        <div className="filter">
-        <button className="filter -btn"
+        <input className="seacrh" type="text" placeholder="Search for restaurants..." value={seacrhValue}
+        onChange={(e)=>{handleOnChange(e)}}
+        ></input>
+        <button className="filter-btn"
         onClick={()=>{
             let filteredRestr = listOfRest?.filter((eachRest)=>eachRest?.info?.avgRating >4)
             setListOfRest(filteredRestr)
@@ -39,10 +73,10 @@ const Body = () => {
         </button>
        </div>
         <div className="res-container">
-            {listOfRest?.map((resObj,i)=>{
+            {listOfRest?.map((resObj)=>{
                 return <RestaurantCard 
                 resData={resObj}
-                key={i}
+                key={resObj?.id}
                 />
             })}
         </div>

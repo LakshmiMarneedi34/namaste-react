@@ -2,6 +2,7 @@
     display: flex;
     justify-content: space-between;
     border:1px solid black;
+    margin: 5px;
 }
 .logo{
     width: 200px;
@@ -50,4 +51,11 @@
 .login{
     padding: 0px;
     cursor: pointer;
+}
+.filter{
+    display: flex;
+    padding: 5px;
+}
+.filter-btn{
+margin:2px;
 }
