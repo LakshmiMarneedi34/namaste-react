@@ -1,4 +1,4 @@
-import React from "react" //coming from nodemodules we have package react
+import React, { lazy, Suspense } from "react" //coming from nodemodules we have package react
 import ReactDOM from "react-dom/client"
 import Header from "./components/Header"
 import Body from "./components/Body"
@@ -7,6 +7,7 @@ import ContactUs from "./components/ContactUs"
 import Error from "./components/Error"
 import { createBrowserRouter,RouterProvider,Outlet } from "react-router-dom"
 import RestaurantMenu from "./components/RestaurantMenu"
+// import Grocery from "./components/Grocery.jsx"
 
 //React.createElement return object when we render this on to the dom then it becomes a HTML Element
 //JSX => React.CreateElement => returns JS Object => HTMLElement(render) --->Babel is converting elemnets into regular js
@@ -19,6 +20,7 @@ const App = () => {
         </div>
     )
 }
+const Grocery = lazy(()=> import ("./components/Grocery"))
 const appRouter = createBrowserRouter([
     {
         path:"/",
@@ -37,6 +39,14 @@ const appRouter = createBrowserRouter([
                 path:"/contact-us",
                 element:<ContactUs/>
             },
+            {
+                path: "/grocery",
+                element: (
+                  <Suspense fallback={<h1>Loading....</h1>}>
+                    <Grocery />
+                  </Suspense>
+                ),
+              },
             {
                 path:"/restaurants/:resId",
                 element:<RestaurantMenu/>

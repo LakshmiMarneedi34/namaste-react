@@ -1,6 +1,7 @@
 import RestaurantCard from "./Restaurant";
 import {useEffect, useState} from "react"
 import Shimmer from "./Shimmer";
+import useOnlineStatus from "./utils/useOnlineStatus";
 const Body = () => {
     const [listOfRest,setListOfRest]=useState([]);
     const [seacrhValue,setSearchValue] = useState([])
@@ -35,6 +36,8 @@ const Body = () => {
         setOriginalList(modifiedData)
     }else{
         setLoader(false)
+        setListOfRest([])
+        setOriginalList([])
     }
     }
     const handleOnChange = (e) => {
@@ -58,7 +61,12 @@ const Body = () => {
         console.log("##filteres",filteredlist)
         setListOfRest(filteredlist)
     }
-    return loader ? <Shimmer /> : (
+
+    const onlineStatus = useOnlineStatus();
+    if(!onlineStatus) return (
+        <h1>Looks like you're offline!! Please Check your internet connection;</h1>
+    )
+    return listOfRest?.length===0 ? <Shimmer /> : (
     <div className="body">
        <div className="filter">
         <input className="seacrh" type="text" placeholder="Search for restaurants..." value={seacrhValue}
