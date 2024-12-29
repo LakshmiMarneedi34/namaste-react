@@ -3,12 +3,9 @@ import { CDN_URL } from "./utils/constants";
 const RestaurantCard = ({resData}) => {
     // console.log("res",resData)
     return(
-        <div className="res-card" style={{backgroundColor:'#f0f0f0'}}>
-            <img className="res-logo"alt="res-logo"src={`${CDN_URL}${resData?.imagedID}`}/>
-            <h3>{resData?.name}</h3>
-            {/* {resData?.card?.card?.info?.cuisines?.map((each) => {
-                return <h4 key={each}>{each}</h4>;
-            })} */}
+        <div className="m-4 p-4 w-[250px] rounded-lg bg-gray-100 hover:bg-gray-200">
+            <img className="rounded-lg"alt="res-logo"src={`${CDN_URL}${resData?.imagedID}`}/>
+            <h3 className="font-bold py-3 text-lg">{resData?.name}</h3>
             <h4>{resData?.cuisines}</h4>
             <h4>{resData?.avgRating} stars</h4>
              <h4>{resData?.costForTwo}</h4>

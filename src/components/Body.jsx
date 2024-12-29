@@ -40,6 +40,7 @@ const Body = () => {
         setOriginalList([])
     }
     }
+    console.log("original list",originalList)
     const handleOnChange = (e) => {
         let currentValue = e.target.value;
         console.log("currentValue",currentValue)
@@ -68,19 +69,22 @@ const Body = () => {
     )
     return listOfRest?.length===0 ? <Shimmer /> : (
     <div className="body">
-       <div className="filter">
-        <input className="seacrh" type="text" placeholder="Search for restaurants..." value={seacrhValue}
+       <div className="flex">
+        <div className="seacrh m-4 p-4">
+        <input className="border border-solid border-black" type="text" placeholder="Search for restaurants..." value={seacrhValue}
         onChange={(e)=>{handleOnChange(e)}}
         ></input>
-        <button className="filter-btn"
+        <button className="px-2 py-2 bg-green-100 m-4 rounded-lg"
         onClick={()=>{
-            let filteredRestr = listOfRest?.filter((eachRest)=>eachRest?.info?.avgRating >4)
+            let filteredRestr = listOfRest?.filter((eachRest)=>Number(eachRest?.avgRating) > 4)
+            console.log("filteredRestr",filteredRestr)
             setListOfRest(filteredRestr)
         }}
-        > Top Rated Restaurantrs
+        > Top Rated Restaurants
         </button>
+        </div>
        </div>
-        <div className="res-container">
+        <div className="flex flex-wrap">
             {listOfRest?.map((resObj)=>{
                 return <RestaurantCard 
                 resData={resObj}
