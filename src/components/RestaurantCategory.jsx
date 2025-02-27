@@ -1,27 +1,43 @@
-import React, { useState } from 'react'
-import ItemList from './ItemList'
+import React, { useState } from "react";
+import ItemList from "./ItemList";
+import Shimmer from "./Shimmer"; // Import Shimmer for loading effect
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faChevronDown, faChevronUp } from "@fortawesome/free-solid-svg-icons";
 
-const RestaurantCategory = ({category,showItems,setShowIndex}) => {
-    console.log("category",category)
-    const handleClick = () => {
-        setShowIndex()
+const RestaurantCategory = ({ category, showItems, setShowIndex }) => {
+  const [loading, setLoading] = useState(false);
+
+  const handleClick = () => {
+    if (!showItems) {
+      setLoading(true);
+      setTimeout(() => setLoading(false), 500);
     }
-    return (
+    setShowIndex();
+  };
 
-        <div>
-          <div className="w-6/12 mx-auto my-4 bg-gray-50 shadow-lg p-4">
-            <div className="flex justify-between" onClick={handleClick}>
-              <span className="font-bold text-lg">
-                {category?.title} ({category?.itemCards.length})
-              </span>
-    
-              {/* Font Awesome icon with Tailwind styling */}
-              <i className="fas fa-caret-down text-blue-500 hover:text-blue-700 transition-all h-8"></i>
-            </div>
-            {showItems && <ItemList items={category?.itemCards} />}
-          </div>
-        </div>
-      );
-}
+  return (
+    <div className="w-6/12 mx-auto my-4 bg-gray-50 shadow-lg p-4 rounded-lg">
+      {/* Clickable Header */}
+      <div
+        className="flex justify-between items-center p-2 cursor-pointer hover:bg-gray-100 transition-all rounded-lg"
+        onClick={handleClick}
+      >
+        <span className="font-bold text-lg">
+          {category?.title} ({category?.itemCards?.length || 0})
+        </span>
 
-export default RestaurantCategory
+        {/* Expand/Collapse Icon */}
+        <i className={`fas fa-chevron-${showItems ? "up" : "down"} text-blue-500 text-xl`} />
+        {/* <FontAwesomeIcon icon={showItems ? faChevronUp : faChevronDown} className="text-blue-500 text-xl" /> */}
+        {/* <i className="text-blue-500 text-xl before:content-['\f078'] before:font-awesome"></i> */}
+
+      </div>
+
+
+      {/* Show shimmer while loading */}
+      {showItems && (loading ? <Shimmer /> : <ItemList items={category?.itemCards} />)}
+    </div>
+  );
+};
+
+export default RestaurantCategory;

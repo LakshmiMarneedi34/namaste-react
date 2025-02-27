@@ -11,6 +11,8 @@ import 'primereact/resources/themes/lara-light-blue/theme.css';  // Choose a the
 import 'primereact/resources/primereact.min.css';                // Core styles
 import 'primeicons/primeicons.css';                              // Icons
 import 'primeflex/primeflex.css';     
+import "@fortawesome/fontawesome-free/css/all.min.css";
+
 // import Grocery from "./components/Grocery.jsx"
 
 //React.createElement return object when we render this on to the dom then it becomes a HTML Element
