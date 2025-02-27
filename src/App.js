@@ -7,6 +7,10 @@ import ContactUs from "./components/ContactUs"
 import Error from "./components/Error"
 import { createBrowserRouter,RouterProvider,Outlet } from "react-router-dom"
 import RestaurantMenu from "./components/RestaurantMenu"
+import 'primereact/resources/themes/lara-light-blue/theme.css';  // Choose a theme
+import 'primereact/resources/primereact.min.css';                // Core styles
+import 'primeicons/primeicons.css';                              // Icons
+import 'primeflex/primeflex.css';     
 // import Grocery from "./components/Grocery.jsx"
 
 //React.createElement return object when we render this on to the dom then it becomes a HTML Element

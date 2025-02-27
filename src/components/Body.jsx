@@ -2,6 +2,7 @@ import RestaurantCard from "./Restaurant";
 import {useEffect, useState} from "react"
 import Shimmer from "./Shimmer";
 import useOnlineStatus from "./utils/useOnlineStatus";
+import { Link } from "react-router-dom";
 const Body = () => {
     const [listOfRest,setListOfRest]=useState([]);
     const [seacrhValue,setSearchValue] = useState([])
@@ -84,14 +85,13 @@ const Body = () => {
         </button>
         </div>
        </div>
-        <div className="flex flex-wrap">
-            {listOfRest?.map((resObj)=>{
-                return <RestaurantCard 
-                resData={resObj}
-                key={resObj?.id}
-                />
-            })}
-        </div>
+       <div className="flex flex-wrap">
+  {listOfRest?.map((resObj) => (
+    <Link key={resObj?.id} to={`/restaurants/${resObj?.id}`}>
+      <RestaurantCard resData={resObj} />
+    </Link>
+  ))}
+</div>
     </div>
     )
 }
