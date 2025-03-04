@@ -10,6 +10,7 @@ const Body = () => {
     const [searchValue,setSearchValue] = useState([])
     const [originalList,setOriginalList]=useState([])
     const [loadingCard, setLoadingCard] = useState(false);
+
     const navigate = useNavigate()
 
     const userData = useContext(UserContext)

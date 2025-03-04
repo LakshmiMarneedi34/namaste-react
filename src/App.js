@@ -12,6 +12,7 @@ import 'primereact/resources/primereact.min.css';                // Core styles
 import 'primeicons/primeicons.css';                              // Icons
 import 'primeflex/primeflex.css';     
 import "@fortawesome/fontawesome-free/css/all.min.css";
+import UserContext from "./components/utils/UserContext"
 
 // import Grocery from "./components/Grocery.jsx"
 
@@ -20,10 +21,12 @@ import "@fortawesome/fontawesome-free/css/all.min.css";
 
 const App = () => {
     return (
+        <UserContext.Provider value={{loggedInUser:"lavanya"}}>
         <div>
             <Header/>
             <Outlet/>
         </div>
+        </UserContext.Provider>
     )
 }
 const Grocery = lazy(()=> import ("./components/Grocery"))
