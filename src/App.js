@@ -13,7 +13,9 @@ import 'primeicons/primeicons.css';                              // Icons
 import 'primeflex/primeflex.css';     
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import UserContext from "./components/utils/UserContext"
-
+import { Provider } from "react-redux"
+import appStore from "./components/utils/appStore"
+import Cart from "./components/Cart"
 // import Grocery from "./components/Grocery.jsx"
 
 //React.createElement return object when we render this on to the dom then it becomes a HTML Element
@@ -21,12 +23,14 @@ import UserContext from "./components/utils/UserContext"
 
 const App = () => {
     return (
+        <Provider store={appStore}>
         <UserContext.Provider value={{loggedInUser:"lavanya"}}>
         <div>
             <Header/>
             <Outlet/>
         </div>
         </UserContext.Provider>
+        </Provider>
     )
 }
 const Grocery = lazy(()=> import ("./components/Grocery"))
@@ -59,6 +63,10 @@ const appRouter = createBrowserRouter([
             {
                 path:"/restaurants/:resId",
                 element:<RestaurantMenu/>
+            },
+            {
+                path:"/cart",
+                element:<Cart/>
             }
         ],
         errorElement:<Error/>

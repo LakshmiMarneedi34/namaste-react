@@ -1,10 +1,20 @@
 import React from 'react'
 import { CDN_URL } from "./utils/constants";
 import { Button } from 'primereact/button';
+import { useDispatch, useSelector } from 'react-redux';
+import { addItem } from './utils/cartSlice';
+
 
 const ItemList = ({items}) => {
     console.log("### items",items)
+ 
+   
     console.log("### items", typeof items?.[0].card.info.price)
+    const dispatch = useDispatch()
+    const handleAddItem = (item) => {
+      dispatch(addItem(item))
+    
+    }
   return (
     <div>
         {items?.map((item)=> (
@@ -35,6 +45,9 @@ const ItemList = ({items}) => {
       label="Add"
       icon="pi pi-plus"
       iconPos="right"
+      onClick={()=>{
+        handleAddItem(item)
+      }}
     />
   </div>
 </div>
