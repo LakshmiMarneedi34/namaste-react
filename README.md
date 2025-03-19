@@ -36,3 +36,17 @@
 
 #Redux Toolkit 
 #-Install @reduxjs/toolkit and react-redux 
+
+# Types Of Testing (developers)
+- Unit Testing
+- Integration Testing
+- Installed Babel dependencies
+
+# Setting up Testing in our app
+- Install React Testing Library 
+- Install Jest Framework
+- Install Babel dependencies
+- Configure Babel
+- Configure Parcel Config file to disable default Babel transpilation given by parcel
+- Jest Configuration - npx jest --init
+- Install JSDOM Libaray
