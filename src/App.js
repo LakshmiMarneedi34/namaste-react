@@ -34,53 +34,77 @@ const App = () => {
     )
 }
 const Grocery = lazy(()=> import ("./components/Grocery"))
+// const appRouter = createBrowserRouter([
+//     {
+//         path:"/",
+//         element:<App/>,
+//         children:[
+//             {
+//                 path:"/",
+//                 element:<Body/>
+//             },
+//             {
+//                 path:"/about",
+//                 element:<About/>
+        
+//             },
+//             {
+//                 path:"/contact-us",
+//                 element:<ContactUs/>
+//             },
+//             {
+//                 path: "/grocery",
+//                 element: (
+//                   <Suspense fallback={<h1>Loading....</h1>}>
+//                     <Grocery />
+//                   </Suspense>
+//                 ),
+//               },
+//             {
+//                 path:"/restaurants/:resId",
+//                 element:<RestaurantMenu/>
+//             },
+//             {
+//                 path:"/cart",
+//                 element:<Cart/>
+//             }
+//         ],
+//         errorElement:<Error/>
+//     },
+//     // {
+//     //     path:"/about",
+//     //     element:<About/>
+
+//     // },
+//     // {
+//     //     path:"/contact-us",
+//     //     element:<ContactUs/>
+//     // }
+// ])
 const appRouter = createBrowserRouter([
     {
-        path:"/",
-        element:<App/>,
-        children:[
-            {
-                path:"/",
-                element:<Body/>
-            },
-            {
-                path:"/about",
-                element:<About/>
-        
-            },
-            {
-                path:"/contact-us",
-                element:<ContactUs/>
-            },
-            {
-                path: "/grocery",
-                element: (
-                  <Suspense fallback={<h1>Loading....</h1>}>
-                    <Grocery />
-                  </Suspense>
-                ),
-              },
-            {
-                path:"/restaurants/:resId",
-                element:<RestaurantMenu/>
-            },
-            {
-                path:"/cart",
-                element:<Cart/>
-            }
-        ],
-        errorElement:<Error/>
+      path: "/",
+      element: <App />,
+      children: [
+        { path: "/", element: <Body /> },
+        { path: "/about", element: <About /> },
+        { path: "/contact-us", element: <ContactUs /> },
+        {
+          path: "/grocery",
+          element: (
+            <Suspense fallback={<h1>Loading....</h1>}>
+              <Grocery />
+            </Suspense>
+          ),
+        },
+        { path: "/restaurants/:resId", element: <RestaurantMenu /> },
+        { path: "/cart", element: <Cart /> },
+      ],
+      errorElement: <Error />,
     },
-    // {
-    //     path:"/about",
-    //     element:<About/>
+  ]);
+  
+  export default appRouter;
+// const root = ReactDOM.createRoot(document.getElementById("root"))
 
-    // },
-    // {
-    //     path:"/contact-us",
-    //     element:<ContactUs/>
-    // }
-])
-const root = ReactDOM.createRoot(document.getElementById("root"))
-
-root.render(<RouterProvider router={appRouter}/>)
+// root.render(<RouterProvider router={appRouter}/>)
